@@ -1,1 +1,3 @@
 src/main/resources/DADOS_ABERTOS_MEDICAMENTOS.csv
+/target/
+/logs/
