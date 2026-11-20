@@ -1,0 +1,8 @@
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/controller/MedicamentoController.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/model/Medicamento.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/exception/MedicamentoNaoEncontradoException.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/model/SituacaoRegistro.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/repository/MedicamentoRepository.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/Main.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/exception/GlobalExceptionHandler.java
+/home/diana/workspace-api-web-server/medicamentosApi/src/main/java/br/edu/utfpr/td/tsi/service/MedicamentoService.java
