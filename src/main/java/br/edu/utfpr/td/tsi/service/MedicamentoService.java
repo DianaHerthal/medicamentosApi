@@ -50,9 +50,9 @@ public class MedicamentoService {
         for (Medicamento medicamento : medicamentos) {
              medicamento.setId(null);
 
-            Optional<Medicamento> existente = repository.findByNomeMedicamentoIgnoreCase(
+            List<Medicamento> existente = repository.findByNomeMedicamentoContainingIgnoreCase(
                     medicamento.getNomeMedicamento());
-            if (existente.isPresent()) {
+            if (!existente.isEmpty()) {
                 log.warn("Nome duplicado: {}", medicamento.getNomeMedicamento());
                 throw new IllegalArgumentException(
                         "Nome " + medicamento.getNomeMedicamento() + " já cadastrado.");
@@ -64,21 +64,12 @@ public class MedicamentoService {
         return salvos;
     }
 
-    public List<Medicamento> pesquisar(String nome, String crm, String especialidade) {
+    public List<Medicamento> pesquisar(String nome) {
         List<Criteria> filtros = new ArrayList<>();
 
         if (temValor(nome)) {
             String termo = nome.trim().toUpperCase();
-            filtros.add(Criteria.where("NM_MEDICO").regex(Pattern.quote(termo), "i"));
-        }
-
-        if (temValor(crm)) {
-            filtros.add(Criteria.where("NU_CRM").is(crm.trim().toUpperCase()));
-        }
-
-        if (temValor(especialidade)) {
-            String termo = especialidade.trim().toUpperCase();
-            filtros.add(Criteria.where("ESPECIALIDADE").regex(Pattern.quote(termo), "i"));
+            filtros.add(Criteria.where("NOME_PRODUTO").regex(Pattern.quote(termo), "i"));
         }
 
         if (filtros.isEmpty()) {
@@ -89,8 +80,8 @@ public class MedicamentoService {
         Criteria criteria = new Criteria().andOperator(filtros.toArray(new Criteria[0]));
         List<Medicamento> resultado = mongoTemplate.find(new Query(criteria), Medicamento.class);
 
-        log.debug("Pesquisa [nome={}, crm={}, esp={}] → {} resultado(s)",
-                nome, crm, especialidade, resultado.size());
+        log.debug("Pesquisa [nome={}] → {} resultado(s)",
+                nome, resultado.size());
 
         return resultado;
     }
@@ -190,7 +181,7 @@ public class MedicamentoService {
                 String nomeNormalizado = med.getNomeMedicamento().trim().toUpperCase();
                 
                 if (!nomesJaProcessados.contains(nomeNormalizado) 
-                        && repository.findByNomeMedicamentoIgnoreCase(nomeNormalizado).isEmpty()) {
+                        && repository.findByNomeMedicamentoContainingIgnoreCase(nomeNormalizado).isEmpty()) {
                     
                     med.setId(null);
                     nomesJaProcessados.add(nomeNormalizado);

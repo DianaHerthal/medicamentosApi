@@ -34,18 +34,15 @@ public class MedicamentoController {
 
     @GetMapping
     public List<Medicamento> pesquisar(
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String crm,
-            @RequestParam(required = false) String especialidade) {
+            @RequestParam(required = false) String nome) {
 
-        log.debug("GET /medicamentos?nome={}&crm={}&especialidade={}",
-                nome, crm, especialidade);
+        log.debug("GET /medicamentos?nome={}", nome);
 
-        if (vazio(nome) && vazio(crm) && vazio(especialidade)) {
+        if (vazio(nome)) {
             return List.of();
         }
 
-        return service.pesquisar(nome, crm, especialidade);
+        return service.pesquisar(nome);
     }
 
     @GetMapping("/{id}")
