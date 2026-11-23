@@ -98,46 +98,11 @@ public class MedicamentoService {
     public Medicamento atualizar(String id, Medicamento novosDados) {
         log.debug("Atualizando medicamento ID: {}", id);
 
-        Medicamento medicamento = buscarPorId(id);
-        // validar(novosDados);
-        // normalizar(novosDados);
-        return medicamento;
-
-        // Optional<Medicamento> existente = repository.findByCrmAndUf(
-        //         novosDados.getCrm(), novosDados.getUf());
-
-        // if (existente.isPresent() && !existente.get().getId().equals(id)) {
-        //     log.warn("CRM duplicado na atualização: {}/{}",
-        //             novosDados.getCrm(), novosDados.getUf());
-        //     throw new IllegalArgumentException(
-        //             "CRM " + novosDados.getCrm() + "/" + novosDados.getUf()
-        //                     + " já cadastrado.");
-        // }
-
-        // medico.setNome(novosDados.getNome());
-        // medico.setNomeSocial(novosDados.getNomeSocial());
-        // medico.setCrm(novosDados.getCrm());
-        // medico.setCrmNatural(novosDados.getCrmNatural());
-        // medico.setUf(novosDados.getUf());
-        // medico.setCodigoSituacao(novosDados.getCodigoSituacao());
-        // medico.setSituacao(novosDados.getSituacao());
-        // medico.setDataInscricao(novosDados.getDataInscricao());
-        // medico.setCodigoTipoInscricao(novosDados.getCodigoTipoInscricao());
-        // medico.setTipoInscricao(novosDados.getTipoInscricao());
-        // medico.setEspecialidade(novosDados.getEspecialidade());
-        // medico.setPrimeiraInscricaoUf(novosDados.getPrimeiraInscricaoUf());
-        // medico.setPeriodoInicial(novosDados.getPeriodoInicial());
-        // medico.setPeriodoFinal(novosDados.getPeriodoFinal());
-        // medico.setObservacaoInterdicao(novosDados.getObservacaoInterdicao());
-        // medico.setInstituicaoGraduacao(novosDados.getInstituicaoGraduacao());
-        // medico.setAnoGraduacao(novosDados.getAnoGraduacao());
-        // medico.setTipoFormacao(novosDados.getTipoFormacao());
-        // medico.setFaculdadeEstrangeira(novosDados.getFaculdadeEstrangeira());
-        // medico.setPossuiPosGraduacao(novosDados.getPossuiPosGraduacao());
-
-        // Medico salvo = repository.save(medico);
-        // log.info("Médico atualizado: {} ({})", salvo.getNome(), id);
-        // return salvo;
+        if (repository.existsById(id)) {
+            return repository.save(novosDados);
+        } else {
+            throw new MedicamentoNaoEncontradoException(id);
+        }
     }
 
     public void deletar(String id) {
