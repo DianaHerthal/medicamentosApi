@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -69,7 +68,9 @@ public class MedicamentoController {
     @PostMapping("/importar")
     public String uploadCSVFile(Model model) {
         
-
+        if (service.contar() == 0) {
+                service.importarArquivo("DADOS_ABERTOS_MEDICAMENTOS.csv");
+        }
         return "file-upload-status";
     }
 
